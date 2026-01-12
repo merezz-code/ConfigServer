@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Assurez-vous que Keycloak tourne bien sur le port 8180
+          issuer-uri: http://localhost:8180/realms/gestion-commandes-realm 
+
+  cloud:
+    gateway:
+      # Correction de l'indentation ici
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: client-service
+          uri: lb://CLIENT-SERVICE
+          predicates:
+            - Path=/clients/**
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/products/**
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/orders/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

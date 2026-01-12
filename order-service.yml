@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: order-service
+
+  datasource:
+    url: jdbc:sqlite:order.sqlite
+    driver-class-name: org.sqlite.JDBC
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Port 8180 pour Keycloak !
+          issuer-uri: http://localhost:8180/realms/gestion-commandes-realm
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
