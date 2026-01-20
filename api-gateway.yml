@@ -17,6 +17,7 @@ spring:
       # Correction de l'indentation ici
       default-filters:
         - TokenRelay
+        - RemoveRequestHeader=Cookie
       routes:
         - id: client-service
           uri: lb://CLIENT-SERVICE
